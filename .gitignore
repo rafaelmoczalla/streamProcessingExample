@@ -30,3 +30,6 @@ build
 
 # visual code stuff
 .vscode
+
+# flink stuff
+flink*
