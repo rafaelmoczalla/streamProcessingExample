@@ -25,3 +25,8 @@ hs_err_pid*
 # gradle stuff
 .gradle
 gradle
+bin
+build
+
+# visual code stuff
+.vscode
