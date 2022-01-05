@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   jobmanager:
-    image: flink:scala_2.12-java11
+    image: flink:1.14.2-scala_2.12-java11
     container_name: jobmanager
     command: /docker-entrypoint.sh jobmanager
     environment:
@@ -10,7 +10,7 @@ services:
       - "8080:8080"
       - "8081:8081"
   taskmanager:
-    image: flink:scala_2.12-java11
+    image: flink:1.14.2-scala_2.12-java11
     command: /docker-entrypoint.sh taskmanager
     environment:
       - "FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager"
