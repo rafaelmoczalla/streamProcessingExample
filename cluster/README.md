@@ -3,7 +3,7 @@ Author: Rafael Moczalla
 
 Create Date: 1 March 2021
 
-Last Update: 9 March 2021
+Last Update: 5 January 2022
 
 Tested with Docker in version 20.10.4 and Docker Compose in version 1.28.5 on Ubuntu
 18.04.2 LTS.
@@ -29,7 +29,7 @@ To install Docker
    sudo usermod -aG docker $USER
    ```
 
-Test if docker ist working with the following command
+Test if docker is working with the following command
 
    `sudo docker run hello-world`
 
@@ -63,19 +63,19 @@ To remove the cluster run the following command. All containers will be removed.
 
 ## Work on a Cluster Node via Command Line
 To login to a cluster node via command line one has to execute a bash on the container
-bia `docker exec -it ContainerName bash` where `ContainerName` has to be replaced by the
+via `docker exec -it ContainerName bash` where `ContainerName` has to be replaced by the
 name of the desired container.
 
 To show a list of all running containers run `docker container list --format {{.Names}}`
 in the console.
 
-Be careful! Don't forget that after removing the containers all changes in a container
+Be careful! Do not forget that after removing the containers all changes in a container
 are removed as well.
 
 ## Submit a Job to the Cluster
 To submit a job just download a version of Flink and use it to submit a job as follows.
 
-Dowwnload and unzip Flink
+Download and unzip Flink if not already done
 
    `curl https://downloads.apache.org/flink/flink-1.12.1/flink-1.12.1-bin-scala_2.12.tgz | tar -xz`
 
