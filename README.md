@@ -31,9 +31,9 @@ in the cluster folder for more details.
 ./gradlew jar
 ```
 
-To run the example just download a version of Flink and use it to submit a job as follows.
+To run the example just download a version of Flink and use it to submit a job.
 
-3. Download and unzip Flink if not already done
+1. Download and unzip Flink if not already done
 ```bash
 curl https://downloads.apache.org/flink/flink-1.14.2/flink-1.14.2-bin-scala_2.12.tgz | tar -xz
 ```
