@@ -1,6 +1,5 @@
 package com.fonda.b6.examples;
 
-import com.fonda.b6.examples.data.Average;
 import com.fonda.b6.examples.data.Data;
 import com.fonda.b6.examples.sources.Source;
 
@@ -25,16 +24,18 @@ public class StreamProcessingExample {
             .keyBy(data -> data.getKey())
             .window(SlidingEventTimeWindows.of(Time.seconds(2000), Time.seconds(500)))
             .process(
-                new ProcessWindowFunction<Data, Average, Long, TimeWindow>() {
+                new ProcessWindowFunction<Data, Data, Long, TimeWindow>() {
                     @Override
-                    public void process(Long key, Context context, Iterable<Data> input, Collector<Average> out) {
-                        Average avg = new Average(key, 0L, 0.0);
+                    public void process(Long key, Context context, Iterable<Data> input, Collector<Data> out) {
+                        Long count = 0L;
+                        Double sum = 0.0;
 
                         for (Data value : input) {
-                            avg.addValues(1L, value.getValue());
+                            count++;
+                            sum += value.getValue();
                         }
 
-                        out.collect(avg);
+                        out.collect(new Data(key, sum / count));
                     }
                 }
             )
