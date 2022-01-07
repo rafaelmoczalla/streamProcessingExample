@@ -71,12 +71,12 @@ are removed as well.
 To submit a job just download a version of Flink and use it to submit a job as follows.
 
 1. Download and unzip Flink if not already done
-```bash
-curl https://downloads.apache.org/flink/flink-1.14.2/flink-1.14.2-bin-scala_2.12.tgz | tar -xz
-```
+    ```bash
+    curl https://downloads.apache.org/flink/flink-1.14.2/flink-1.14.2-bin-scala_2.12.tgz | tar -xz
+    ```
 
 2. Change into the directory and submit an example job as follows
-```bash
-cd flink-1.14.2
-./bin/flink run ./examples/streaming/TopSpeedWindowing.jar
-```
+    ```bash
+    cd flink-1.14.2
+    ./bin/flink run ./examples/streaming/TopSpeedWindowing.jar
+    ```

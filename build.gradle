@@ -15,6 +15,7 @@ repositories {
 }
 
 ext {
+    javaMainClass = "com.fonda.b6.examples.StreamProcessingExample"
     flinkVersion = "1.14.2"
     log4jVersion = "2.17.1"
     slf4jVersion = "1.7.32"
@@ -22,7 +23,7 @@ ext {
 
 dependencies {
     compileOnly group: "org.apache.flink", name: "flink-streaming-java_2.12", version: "${flinkVersion}"
-    compileOnly group: "org.apache.flink", name: "flink-clients_2.12", version: "${flinkVersion}"
+    implementation group: "org.apache.flink", name: "flink-clients_2.12", version: "${flinkVersion}"
 
     compileOnly group: "org.apache.logging.log4j", name: "log4j-api", version: "${log4jVersion}"
     compileOnly group: "org.apache.logging.log4j", name: "log4j-core", version: "${log4jVersion}"
@@ -30,8 +31,12 @@ dependencies {
     compileOnly group: "org.slf4j", name: "slf4j-log4j12", version: "${slf4jVersion}"
 }
 
+application {
+    mainClass = javaMainClass
+}
+
 jar {
     manifest {
-        attributes "Main-Class": "com.fonda.b6.examples.StreamProcessingExample"
+        attributes "Main-Class": javaMainClass
     }
 }
