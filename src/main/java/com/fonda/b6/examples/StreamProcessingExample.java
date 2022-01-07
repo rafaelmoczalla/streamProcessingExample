@@ -205,15 +205,20 @@ public class StreamProcessingExample {
     }
 
     public static void main(String[] args) {
-        Long maxEventTime = 100000000L;
+        Long maxEventTime = 3140000L;
+        Long millisecondsBetweenTwoEventGenerations = 1L;
         Integer playerCount = 30;
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        DataStream<PlayerActivity> playerStream = env.addSource(new PlayerActivitySource(maxEventTime, playerCount));
-        DataStream<ShopActivity> shopStream = env.addSource(new ShopActivitySource(maxEventTime, playerCount));
-        DataStream<Feedback> feedbackStream = env.addSource(new FeedbackSource(maxEventTime));
-        DataStream<Ads> adsStream = env.addSource(new AdsSource(maxEventTime));
+        DataStream<PlayerActivity> playerStream = env
+            .addSource(new PlayerActivitySource(millisecondsBetweenTwoEventGenerations, maxEventTime, playerCount));
+        DataStream<ShopActivity> shopStream = env
+            .addSource(new ShopActivitySource(millisecondsBetweenTwoEventGenerations, maxEventTime, playerCount));
+        DataStream<Feedback> feedbackStream = env
+            .addSource(new FeedbackSource(millisecondsBetweenTwoEventGenerations, maxEventTime));
+        DataStream<Ads> adsStream = env
+            .addSource(new AdsSource(millisecondsBetweenTwoEventGenerations, maxEventTime));
 
         // dump the output...
         // to print query results replace .addSink(...) with .print();

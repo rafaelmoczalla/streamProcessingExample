@@ -12,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PlayerActivitySource implements SourceFunction<PlayerActivity> {
 
     private volatile boolean running = true;
+    private Long sleep = 100L;
+
     private Long maxEventTime = 100000L;
     private Long minEventDelay = 2L;
     private Long maxEventDelay = 10L;
@@ -26,7 +28,8 @@ public class PlayerActivitySource implements SourceFunction<PlayerActivity> {
 
     private HashMap<Integer, Integer> onlinePlayers;
 
-    public PlayerActivitySource(Long maxEventTime, Integer playerCount) {
+    public PlayerActivitySource(Long sleep, Long maxEventTime, Integer playerCount) {
+        this.sleep = sleep;
         this.maxEventTime = maxEventTime;
         this.playerCount = playerCount;
 
@@ -75,6 +78,12 @@ public class PlayerActivitySource implements SourceFunction<PlayerActivity> {
                 context.emitWatermark(new Watermark(wm));
                 wm = time + ThreadLocalRandom.current().nextLong(minWmDelay, maxWmDelay + 1);
                 wmTrigger = ThreadLocalRandom.current().nextLong(maxEventDelay + 1);
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

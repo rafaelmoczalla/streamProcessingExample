@@ -10,6 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Source implements SourceFunction<Data<Double>> {
 
     private volatile boolean running = true;
+    private Long sleep = 100L;
+
     private Long maxEventTime = 10000000000L;
     private Long minEventDelay = 200L;
     private Long maxEventDelay = 5000L;
@@ -23,7 +25,9 @@ public class Source implements SourceFunction<Data<Double>> {
     private Double minValue = -100.0;
     private Double maxValue = 100.0;
 
-    public Source() {}
+    public Source(Long sleep) {
+        this.sleep = sleep;
+    }
 
     @Override
     public void run(SourceContext<Data<Double>> context) {
@@ -47,6 +51,12 @@ public class Source implements SourceFunction<Data<Double>> {
                 context.emitWatermark(new Watermark(wm));
                 wm = time + ThreadLocalRandom.current().nextLong(minWmDelay, maxWmDelay + 1);
                 wmTrigger = ThreadLocalRandom.current().nextLong(maxEventDelay + 1);
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -10,6 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AdsSource implements SourceFunction<Ads> {
 
     private volatile boolean running = true;
+    private Long sleep = 100L;
+
     private Long maxEventTime = 100000L;
     private Long minEventDelay = 8L;
     private Long maxEventDelay = 30L;
@@ -26,7 +28,8 @@ public class AdsSource implements SourceFunction<Ads> {
     private Double minLength = 0.0;
     private Double maxLength = 300.0;
 
-    public AdsSource(Long maxEventTime) {
+    public AdsSource(Long sleep, Long maxEventTime) {
+        this.sleep = sleep;
         this.maxEventTime = maxEventTime;
     }
 
@@ -54,6 +57,12 @@ public class AdsSource implements SourceFunction<Ads> {
                 context.emitWatermark(new Watermark(wm));
                 wm = time + ThreadLocalRandom.current().nextLong(minWmDelay, maxWmDelay + 1);
                 wmTrigger = ThreadLocalRandom.current().nextLong(maxEventDelay + 1);
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

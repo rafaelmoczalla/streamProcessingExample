@@ -11,6 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FeedbackSource implements SourceFunction<Feedback> {
 
     private volatile boolean running = true;
+    private Long sleep = 100L;
+
     private Long maxEventTime = 100000L;
     private Long minEventDelay = 20L;
     private Long maxEventDelay = 50L;
@@ -27,7 +29,8 @@ public class FeedbackSource implements SourceFunction<Feedback> {
     private Long minLength = 0L;
     private Long maxLength = 900L;
 
-    public FeedbackSource(Long maxEventTime) {
+    public FeedbackSource(Long sleep, Long maxEventTime) {
+        this.sleep = sleep;
         this.maxEventTime = maxEventTime;
     }
 
@@ -57,6 +60,12 @@ public class FeedbackSource implements SourceFunction<Feedback> {
                 context.emitWatermark(new Watermark(wm));
                 wm = time + ThreadLocalRandom.current().nextLong(minWmDelay, maxWmDelay + 1);
                 wmTrigger = ThreadLocalRandom.current().nextLong(maxEventDelay + 1);
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
