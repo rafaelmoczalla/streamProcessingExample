@@ -7,7 +7,7 @@ import org.apache.flink.streaming.api.watermark.Watermark;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Source implements SourceFunction<Data> {
+public class Source implements SourceFunction<Data<Double>> {
 
     private volatile boolean running = true;
     private Long maxEventTime = 10000000000L;
@@ -26,7 +26,7 @@ public class Source implements SourceFunction<Data> {
     public Source() {}
 
     @Override
-    public void run(SourceContext<Data> context) {
+    public void run(SourceContext<Data<Double>> context) {
         Long time = ThreadLocalRandom.current().nextLong(minEventDelay, maxEventDelay + 1);
         Long wm = ThreadLocalRandom.current().nextLong(minWmDelay, maxWmDelay + 1);
         Long wmTrigger = ThreadLocalRandom.current().nextLong(maxEventDelay + 1);
@@ -34,7 +34,7 @@ public class Source implements SourceFunction<Data> {
         Double value = ThreadLocalRandom.current().nextDouble(minValue, maxValue);
 
         while (running) {
-            context.collectWithTimestamp(new Data(key, value), time);
+            context.collectWithTimestamp(new Data<>(key, value), time);
 
             time += ThreadLocalRandom.current().nextLong(minEventDelay, maxEventDelay + 1);
             key = ThreadLocalRandom.current().nextLong(minKey, maxKey + 1);

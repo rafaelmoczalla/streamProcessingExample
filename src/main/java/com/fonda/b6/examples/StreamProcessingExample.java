@@ -1,9 +1,9 @@
 package com.fonda.b6.examples;
 
 import java.util.HashMap;
+import java.util.stream.StreamSupport;
 
 import com.fonda.b6.examples.data.Ads;
-import com.fonda.b6.examples.data.Data;
 import com.fonda.b6.examples.data.Feedback;
 import com.fonda.b6.examples.data.PlayerActivity;
 import com.fonda.b6.examples.data.ShopActivity;
@@ -11,12 +11,10 @@ import com.fonda.b6.examples.sources.AdsSource;
 import com.fonda.b6.examples.sources.FeedbackSource;
 import com.fonda.b6.examples.sources.PlayerActivitySource;
 import com.fonda.b6.examples.sources.ShopActivitySource;
-import com.fonda.b6.examples.sources.Source;
 import com.fonda.b6.examples.utils.TextGenerator;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.DiscardingSink;
 import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFunction;
@@ -167,9 +165,7 @@ public class StreamProcessingExample {
                     public void process(Context context, Iterable<Ads> input, Collector<Tuple2<String, Long>> out) {
                         Long count = 0L;
 
-                        for (Ads item : input) {
-                            count++;
-                        }
+                        count = StreamSupport.stream(input.spliterator(), false).count();
 
                         if (0 < count)
                             out.collect(new Tuple2<>("Ad", count));
@@ -221,7 +217,7 @@ public class StreamProcessingExample {
 
         // dump the output...
         // to print query results replace .addSink(...) with .print();
-        query1(playerStream).addSink(new DiscardingSink<Double>());
+        query1(playerStream).print();//.addSink(new DiscardingSink<Double>());
         query2(shopStream).addSink(new DiscardingSink<HashMap<String, Long>>());
         query3(feedbackStream, adsStream).addSink(new DiscardingSink<Double>());
 
