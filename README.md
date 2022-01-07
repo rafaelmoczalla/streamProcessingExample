@@ -1,4 +1,4 @@
-# Simulation of Stream Processing Use Case
+# Simulation of a Stream Processing Use Case
 Stream processing simulation of a typical game use case.
 
 Author: [Rafael Moczalla](Rafael.Moczalla@hpi.de)
