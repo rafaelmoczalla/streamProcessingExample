@@ -1,10 +1,10 @@
 package com.fonda.b6.examples.data;
 
-public class Data {
+public class Data<T> {
     Long key;
-    Double value;
+    T value;
 
-    public Data(Long key, Double value) {
+    public Data(Long key, T value) {
         this.key = key;
         this.value = value;
     }
@@ -13,7 +13,7 @@ public class Data {
         return this.key;
     }
 
-    public Double getValue() {
+    public T getValue() {
         return this.value;
     }
 
@@ -22,6 +22,6 @@ public class Data {
         return "Data{" +
                 "key=" + key +
                 ", value=" + value +
-                '}';
+                "}";
     }
 }
