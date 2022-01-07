@@ -1,5 +1,5 @@
-# streamProcessingExample
-Stream Processing with typical workload.
+# Simulation of Stream Processing Use Case
+Stream processing simulation of a typical game use case.
 
 Author: [Rafael Moczalla](Rafael.Moczalla@hpi.de)
 
