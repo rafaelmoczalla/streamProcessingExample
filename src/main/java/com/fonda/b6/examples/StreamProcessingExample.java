@@ -205,11 +205,13 @@ public class StreamProcessingExample {
     }
 
     public static void main(String[] args) {
-        Long maxEventTime = 3140000L;
-        Long millisecondsBetweenTwoEventGenerations = 1L;
-        Integer playerCount = 30;
+        int parallelism = 3;
+        long maxEventTime = 3140000L;
+        long millisecondsBetweenTwoEventGenerations = 1L;
+        int playerCount = 30;
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(parallelism);
 
         DataStream<PlayerActivity> playerStream = env
             .addSource(new PlayerActivitySource(millisecondsBetweenTwoEventGenerations, maxEventTime, playerCount));
@@ -220,7 +222,7 @@ public class StreamProcessingExample {
         DataStream<Ads> adsStream = env
             .addSource(new AdsSource(millisecondsBetweenTwoEventGenerations, maxEventTime));
 
-        // dump the output...
+        // run all queries and dump the output...
         // to print query results replace .addSink(...) with .print();
         query1(playerStream).print();//.addSink(new DiscardingSink<Double>());
         query2(shopStream).addSink(new DiscardingSink<HashMap<String, Long>>());
