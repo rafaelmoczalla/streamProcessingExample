@@ -223,10 +223,10 @@ public class StreamProcessingExample {
             .addSource(new AdsSource(millisecondsBetweenTwoEventGenerations, maxEventTime));
 
         // run all queries and dump the output...
-        // to print query results replace .addSink(...) with .print();
-        query1(playerStream).print();//.addSink(new DiscardingSink<Double>());
-        query2(shopStream).addSink(new DiscardingSink<HashMap<String, Long>>());
-        query3(feedbackStream, adsStream).addSink(new DiscardingSink<Double>());
+        // to print query results replace .addSink(new DiscardingSink<>()) with .print();
+        query1(playerStream).addSink(new DiscardingSink<>());
+        query2(shopStream).addSink(new DiscardingSink<>());
+        query3(feedbackStream, adsStream).addSink(new DiscardingSink<>());
 
         try {
             env.execute("Stream Processing Example");
