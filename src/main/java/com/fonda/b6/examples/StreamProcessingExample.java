@@ -33,7 +33,7 @@ public class StreamProcessingExample {
     // for each continuouse range of 150 milliseconds
     public static DataStream<Double> query1(DataStream<PlayerActivity> dataStream) {
         DataStream<Long> countStream = dataStream
-            .windowAll(TumblingEventTimeWindows.of(Time.milliseconds(150)))
+            .windowAll(TumblingEventTimeWindows.of(Time.milliseconds(500)))// Increased
             .process(
                 new ProcessAllWindowFunction<PlayerActivity, Long, TimeWindow>() {
                     @Override
@@ -66,6 +66,11 @@ public class StreamProcessingExample {
                         for (Long item : input) {
                             count++;
                             sum += item;
+			    try{
+				    Thread.sleep(item); // added sleep as "long processing"
+			    } catch(InterruptedException e){
+
+			    }
                         }
 
                         out.collect(sum / count);
