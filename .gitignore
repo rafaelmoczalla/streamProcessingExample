@@ -24,9 +24,11 @@ hs_err_pid*
 
 # gradle stuff
 .gradle
-gradle
 bin
 build
+
+# don't ignore gradle wrapper to keep it runnable
+!gradle-wrapper.jar
 
 # visual code stuff
 .vscode
