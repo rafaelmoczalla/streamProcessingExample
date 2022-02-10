@@ -94,8 +94,8 @@ public class StreamProcessingExample {
                         Long count = 0L;
 
                         for (ShopActivity item : input) {
-                            if (item.getActivity().equals(gen.shopActivities[2]))
-                                count++;
+                            //if (item.getActivity().equals(gen.shopActivities[2])) // removed the code to emulate forgetting it
+                                //count++;
                         }
 
                         if (0 < count)
@@ -200,6 +200,10 @@ public class StreamProcessingExample {
                         if (countFeedback != 0L) {
                             ratio = countAds.doubleValue() / countFeedback.doubleValue();
                         }
+
+			if (ratio < 0.1) { // added a flip for ratio
+				ratio = -ratio;
+			}
 
                         out.collect(ratio);
                     }
